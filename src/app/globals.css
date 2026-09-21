@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------
+   THEME TOKENS
+   Each theme is a full palette + mood, not just
+   a recolor. Switch via [data-theme] on <html>.
+---------------------------------------------- */
+
+:root,
+[data-theme='nebula'] {
+  --bg: 5 7 13;           /* #05070d */
+  --surface: 12 17 32;    /* #0c1120 */
+  --text: 234 242 255;    /* #eaf2ff */
+  --muted: 138 157 189;   /* #8a9dbd */
+  --accent: 77 163 255;   /* #4da3ff */
+  --accent-2: 130 92 255; /* #825cff */
+  --border: 43 58 92;     /* #2b3a5c */
+  --font-display: var(--font-space), ui-sans-serif, system-ui;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui;
+  --grain-opacity: 0.035;
+}
+
+[data-theme='bloom'] {
+  --bg: 255 247 250;      /* #fff7fa */
+  --surface: 255 255 255; /* #ffffff */
+  --text: 51 18 31;       /* #33121f */
+  --muted: 158 116 133;   /* #9e7485 */
+  --accent: 255 74 145;   /* #ff4a91 */
+  --accent-2: 255 154 158; /* #ff9a9e */
+  --border: 255 214 227;  /* #ffd6e3 */
+  --font-display: var(--font-fraunces), ui-serif, Georgia;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui;
+  --grain-opacity: 0.02;
+}
+
+[data-theme='ink'] {
+  --bg: 250 250 248;       /* #fafaf8 */
+  --surface: 255 255 255; /* #ffffff */
+  --text: 10 10 10;       /* #0a0a0a */
+  --muted: 110 110 105;   /* #6e6e69 */
+  --accent: 255 85 0;     /* #ff5500 - Main Vibrant Orange */
+  --accent-2: 224 75 0;   /* #e04b00 - Secondary Darker Orange */
+  --border: 210 210 204;  /* #d2d2cc */
+  --font-display: var(--font-fraunces), ui-serif, Georgia;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui;
+  --grain-opacity: 0.05;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-family: var(--font-body);
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.35);
+}
+
+/* thin custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--accent) / 0.4);
+  border-radius: 999px;
+}
+
+/* reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* subtle film-grain overlay, intensity per theme */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
