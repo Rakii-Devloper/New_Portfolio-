@@ -109,11 +109,43 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            <motion.div variants={item} className="mt-9 flex items-center gap-5 text-muted">
+            {/* <motion.div variants={item} className="mt-9 flex items-center gap-5 text-muted">
               <a href="https://github.com" aria-label="GitHub" className="focus-ring transition hover:text-accent"><Github size={19} /></a>
               <a href="https://linkedin.com" aria-label="LinkedIn" className="focus-ring transition hover:text-accent"><Linkedin size={19} /></a>
               <a href="mailto:hello@rakeshantony.dev" aria-label="Email" className="focus-ring transition hover:text-accent"><Mail size={19} /></a>
-            </motion.div>
+            </motion.div> */}
+           <motion.div variants={item} className="mt-9 flex items-center gap-3">
+  {/* GitHub */}
+  <a
+    href="https://github.com/Rakii-Devloper"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="GitHub Profile"
+    className="focus-ring group relative flex items-center justify-center rounded-xl border border-border bg-surface/50 p-3 text-muted backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:bg-surface hover:text-accent hover:shadow-glow hover:-translate-y-0.5"
+  >
+    <Github size={19} />
+  </a>
+
+  {/* LinkedIn */}
+  <a
+    href="https://linkedin.com/in/your-profile" // Replace with actual LinkedIn link
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="LinkedIn Profile"
+    className="focus-ring group relative flex items-center justify-center rounded-xl border border-border bg-surface/50 p-3 text-muted backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:bg-surface hover:text-accent hover:shadow-glow hover:-translate-y-0.5"
+  >
+    <Linkedin size={19} />
+  </a>
+
+  {/* Email */}
+  <a
+    href="mailto:hello@rakeshantony.dev"
+    aria-label="Send Email"
+    className="focus-ring group relative flex items-center justify-center rounded-xl border border-border bg-surface/50 p-3 text-muted backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:bg-surface hover:text-accent hover:shadow-glow hover:-translate-y-0.5"
+  >
+    <Mail size={19} />
+  </a>
+</motion.div>
           </motion.div>
 
           {/* RIGHT SIDE: Dedicated Image Area with Parallax Effect (5 Columns) */}
