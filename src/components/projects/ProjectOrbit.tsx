@@ -5,21 +5,35 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import * as THREE from 'three';
 import { PROJECTS } from '@/data/projects';
 import OrbitCard from './OrbitCard';
 
 const RADIUS = 4.4;
-const AUTO_ROTATE_SPEED = 0.12; // radians/sec when idle
+const AUTO_ROTATE_SPEED = 0.12; // Auto spin speed
 
 function Ring({
-  angle,
+  targetAngle,
   onSelect,
 }: {
-  angle: number;
+  targetAngle: number;
   onSelect: (slug: string) => void;
 }) {
+  const groupRef = useRef<THREE.Group>(null);
+  const currentAngle = useRef(0);
   const count = PROJECTS.length;
   const anglePer = (Math.PI * 2) / count;
+
+  useFrame((_, delta) => {
+    if (groupRef.current) {
+      currentAngle.current = THREE.MathUtils.lerp(
+        currentAngle.current,
+        targetAngle,
+        delta * 6
+      );
+      groupRef.current.rotation.y = currentAngle.current;
+    }
+  });
 
   const items = useMemo(
     () =>
@@ -31,13 +45,14 @@ function Ring({
   );
 
   return (
-    <>
+    <group ref={groupRef}>
       {items.map(({ project, base }) => {
-        const effective = base + angle;
-        const proximity = (Math.cos(effective) + 1) / 2; // 0 back, 1 front
-        const x = Math.sin(effective) * RADIUS;
-        const z = Math.cos(effective) * RADIUS;
+        const effective = base + targetAngle;
+        const proximity = (Math.cos(effective) + 1) / 2;
+        const x = Math.sin(base) * RADIUS;
+        const z = Math.cos(base) * RADIUS;
         const front = proximity > 0.94;
+
         return (
           <group key={project.slug} position={[x, 0, z]}>
             <OrbitCard
@@ -49,27 +64,8 @@ function Ring({
           </group>
         );
       })}
-    </>
+    </group>
   );
-}
-
-function AutoRotate({
-  angleRef,
-  isDragging,
-  isHovering,
-  setAngle,
-}: {
-  angleRef: React.MutableRefObject<number>;
-  isDragging: React.MutableRefObject<boolean>;
-  isHovering: React.MutableRefObject<boolean>;
-  setAngle: (a: number) => void;
-}) {
-  useFrame((_, delta) => {
-    if (isDragging.current || isHovering.current) return;
-    angleRef.current += delta * AUTO_ROTATE_SPEED;
-    setAngle(angleRef.current);
-  });
-  return null;
 }
 
 function OrbitSceneInner() {
@@ -82,7 +78,7 @@ function OrbitSceneInner() {
   const dragDistance = useRef(0);
 
   const handleSelect = (slug: string) => {
-    if (dragDistance.current > 8) return; // was a drag, not a tap
+    if (dragDistance.current > 8) return;
     router.push(`/projects/${slug}`);
   };
 
@@ -120,8 +116,13 @@ function OrbitSceneInner() {
       <Canvas dpr={[1, 1.6]} camera={{ position: [0, 0, RADIUS + 5], fov: 40 }} gl={{ alpha: true }}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.6} />
-          <Ring angle={angle} onSelect={handleSelect} />
-          <AutoRotate angleRef={angleRef} isDragging={isDragging} isHovering={isHovering} setAngle={setAngle} />
+          <Ring targetAngle={angle} onSelect={handleSelect} />
+          <AutoRotate
+            angleRef={angleRef}
+            isDragging={isDragging}
+            isHovering={isHovering}
+            setAngle={setAngle}
+          />
         </Suspense>
       </Canvas>
 
@@ -143,5 +144,23 @@ function OrbitSceneInner() {
   );
 }
 
-// WebGL + pointer drag only make sense client-side
+function AutoRotate({
+  angleRef,
+  isDragging,
+  isHovering,
+  setAngle,
+}: {
+  angleRef: React.MutableRefObject<number>;
+  isDragging: React.MutableRefObject<boolean>;
+  isHovering: React.MutableRefObject<boolean>;
+  setAngle: (a: number) => void;
+}) {
+  useFrame((_, delta) => {
+    if (isDragging.current || isHovering.current) return;
+    angleRef.current += delta * AUTO_ROTATE_SPEED;
+    setAngle(angleRef.current);
+  });
+  return null;
+}
+
 export default dynamic(() => Promise.resolve(OrbitSceneInner), { ssr: false });

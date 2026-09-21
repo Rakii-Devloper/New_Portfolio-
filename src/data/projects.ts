@@ -4,46 +4,56 @@ export interface Project {
   desc: string;
   tags: string[];
   gradient: [string, string];
+  image?: string;
   featured?: boolean;
 }
 
-// Replace with real projects — gradient is two hex colors used for the
-// card's glow/thumbnail since real screenshots aren't wired in yet.
 export const PROJECTS: Project[] = [
   {
-    slug: 'project-one',
-    title: 'Project One',
-    desc: 'Short one-line description of what it does and the stack used.',
-    tags: ['Next.js', 'Three.js'],
-    gradient: ['#4da3ff', '#825cff'],
+    slug: 'tradesense-ai',
+    title: 'TradesenseAI - Real-Time Stock Market Tracker & AI Analyzer',
+    desc: 'Python application pulling live market data via REST APIs, running AI/ML trend models, and pushing automated Telegram/WhatsApp breakout alerts.',
+    tags: ['Python', 'Pandas', 'REST APIs', 'AI/ML', 'Telegram API', 'Automation'],
+    gradient: ['#0f172a', '#38bdf8'],
+    image: '/projects/tradesense.jpg',
     featured: true,
   },
   {
-    slug: 'project-two',
-    title: 'Project Two',
-    desc: 'Short one-line description of what it does and the stack used.',
-    tags: ['React', 'Node.js'],
-    gradient: ['#ff4a91', '#ff9a9e'],
+    slug: 'wisright-enterprise-crm',
+    title: 'Wisright Enterprise CRM - FA Module',
+    desc: 'Enterprise CRM managing high-volume donor records with granular Role-Based Access Control (RBAC), client-side caching, and high-throughput REST APIs.',
+    tags: ['React', 'TypeScript', 'Recoil', 'ASP.NET Web API', 'SQL Server'],
+    gradient: ['#1e1b4b', '#818cf8'],
+    image: '/projects/crm.jpg',
+    featured: true,
   },
   {
-    slug: 'project-three',
-    title: 'Project Three',
-    desc: 'Short one-line description of what it does and the stack used.',
-    tags: ['TypeScript'],
-    gradient: ['#38bdf8', '#4da3ff'],
+    slug: 'youtube-automation-bot',
+    title: 'YouTube Automation Bot - Content Publishing Pipeline',
+    desc: 'End-to-end Python pipeline using AI models for SEO title/tag generation, scheduled daily uploads, and automated performance summaries via Telegram.',
+    tags: ['Python', 'YouTube Data API', 'AI Text-Gen', 'Cron', 'SMTP'],
+    gradient: ['#450a0a', '#f87171'],
+    featured: true,
   },
   {
-    slug: 'project-four',
-    title: 'Project Four',
-    desc: 'Short one-line description of what it does and the stack used.',
-    tags: ['Node.js', 'MongoDB'],
-    gradient: ['#5fa04e', '#88ce02'],
+    slug: 'ken-sports-fantasy-app',
+    title: 'Ken Sports - Fantasy Football Mobile App',
+    desc: 'React Native mobile application for American football fantasy sports covering core gameplay and real-time team selection flows.',
+    tags: ['React Native', 'JavaScript', 'Redux', 'Mobile UI'],
+    gradient: ['#022c22', '#34d399'],
   },
   {
-    slug: 'project-five',
-    title: 'Project Five',
-    desc: 'Short one-line description of what it does and the stack used.',
-    tags: ['React', 'Tailwind'],
-    gradient: ['#f7df1e', '#ff9a9e'],
+    slug: 'doodle-assessment-platform',
+    title: 'Doodle - Online Assessment & Interview Platform',
+    desc: 'Interactive frontend platform engineered for online technical assessments, candidate evaluation UI, and test workflows.',
+    tags: ['React.js', 'TypeScript', 'Tailwind CSS', 'REST APIs'],
+    gradient: ['#3f2305', '#f97316'],
+  },
+  {
+    slug: 'instakart-ecommerce',
+    title: 'Instakart - E-Commerce Shopping Platform',
+    desc: 'Modular React UI components with Redux state management and validated checkout flows using Postman & Swagger.',
+    tags: ['React.js', 'Redux', 'Bootstrap', 'REST APIs'],
+    gradient: ['#1f2937', '#9ca3af'],
   },
 ];
